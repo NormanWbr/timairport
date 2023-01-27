@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -23,10 +23,10 @@ public class Plane {
     private LocalDate registrationDate;
 
     @Column(name = "in_maintenance", nullable = false)
-    private Boolean inMaintenance;
+    private Boolean inMaintenance = false;
 //--------------------------------------------------//
     @OneToMany(mappedBy = "plane")
-    private Set<Flight> flights = new LinkedHashSet<>();
+    private List<Flight> flights = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "plane_type_id", nullable = false)

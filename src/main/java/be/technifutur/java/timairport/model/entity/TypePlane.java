@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -18,11 +18,11 @@ public class TypePlane {
     @Column(nullable = false, unique = true)
     private String name;
 
-    private int capacity;
+    private Integer capacity;
     //--------------------------------------------------//
     @ManyToMany(mappedBy = "planeTypesAllowed")
-    private Set<Airport> airports = new LinkedHashSet<>();
+    private List<Airport> airports = new ArrayList<>();
 
     @OneToMany(mappedBy = "type")
-    private Set<Plane> planes;
+    private List<Plane> planes = new ArrayList<>();
 }

@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -22,8 +22,8 @@ public class Company {
     private String originCountry;
 //--------------------------------------------------//
     @OneToMany(mappedBy = "company")
-    private Set<Plane> planes = new LinkedHashSet<>();
+    private List<Plane> planes = new ArrayList<>();
 
     @OneToMany(mappedBy = "company")
-    private Set<Pilot> pilotes = new LinkedHashSet<>();
+    private List<Pilot> pilotes = new ArrayList<>();
 }

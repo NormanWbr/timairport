@@ -5,7 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -22,10 +23,10 @@ public class Pilot extends Person {
     private LocalDate licenseAcquisition;
 //--------------------------------------------------//
     @OneToMany(mappedBy = "captain")
-    private Set<Flight> flightsAsCaptain;
+    private List<Flight> flightsAsCaptain = new ArrayList<>();
 
     @OneToMany(mappedBy = "firstOfficer")
-    private Set<Flight> flightsAsFirstOfficer;
+    private List<Flight> flightsAsFirstOfficer = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "company_id", nullable = false)

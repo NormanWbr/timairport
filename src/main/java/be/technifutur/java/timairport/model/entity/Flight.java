@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -46,5 +46,5 @@ public class Flight {
     private Pilot firstOfficer;
 
     @OneToMany(mappedBy = "flight")
-    private Set<Booking> bookings = new LinkedHashSet<>();
+    private List<Booking> bookings = new ArrayList<>();
 }

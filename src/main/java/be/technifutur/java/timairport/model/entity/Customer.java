@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -16,6 +16,6 @@ public class Customer extends Person{
     private Long id;
 //--------------------------------------------------//
     @OneToMany(mappedBy = "customer")
-    private Set<Booking> bookings = new LinkedHashSet<>();
+    private List<Booking> bookings = new ArrayList<>();
 
 }
