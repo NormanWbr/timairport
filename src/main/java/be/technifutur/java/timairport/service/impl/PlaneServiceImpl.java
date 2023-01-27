@@ -56,9 +56,6 @@ public class PlaneServiceImpl implements PlaneService {
 
     @Override
     public List<PlaneDTO> getAll() {
-        List<PlaneDTO> planesDTO = new ArrayList<>();
-        planeRepository.findAll().forEach(p -> planesDTO.add(PlaneDTO.from(p)));
-
-        return planesDTO;
+        return planeRepository.findAll().stream().map(PlaneDTO::from).toList();
     }
 }
