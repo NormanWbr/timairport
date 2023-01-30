@@ -18,22 +18,14 @@ public class PlaneDTO {
 
     @Data
     @Builder
-    public static class TypeDTO {
-        private Long id;
-        private String name;
-        private Integer capacity;
-    }
-
-    @Data
-    @Builder
-    public static class CompanyDTO{
+    public static class CompanyDTO {
         private Long id;
         private String name;
         private String originCountry;
     }
 
-    public static PlaneDTO from(Plane entity){
-        if(entity == null)
+    public static PlaneDTO from(Plane entity) {
+        if (entity == null)
             return null;
 
         return PlaneDTO.builder()
@@ -41,13 +33,7 @@ public class PlaneDTO {
                 .inMaintenance(entity.getInMaintenance())
                 .callSign(entity.getCallSign())
                 .registrationDate(entity.getRegistrationDate())
-                .type(
-                        PlaneDTO.TypeDTO.builder()
-                                .id(entity.getType().getId())
-                                .name(entity.getType().getName())
-                                .capacity(entity.getType().getCapacity())
-                                .build()
-                )
+                .type(TypeDTO.from(entity.getType()))
                 .company(
                         PlaneDTO.CompanyDTO.builder()
                                 .id(entity.getCompany().getId())

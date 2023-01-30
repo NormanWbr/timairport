@@ -17,15 +17,8 @@ public class PilotService {
 
     //--------------------------------------------------//
     public List<PilotDTO> getAll() {
-
-        List<Pilot> pilots = pilotRepository.findAll();
-
-        return pilots.stream()
-                .map(
-                        entity -> PilotDTO.builder()
-                                .id(entity.getId())
-                                .name(entity.getFirstName() + " " + entity.getLastName())
-                                .build())
+        return pilotRepository.findAll().stream()
+                .map(PilotDTO::from)
                 .toList();
     }
 }

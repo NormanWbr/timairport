@@ -4,8 +4,10 @@ import be.technifutur.java.timairport.model.dto.PlaneDTO;
 import be.technifutur.java.timairport.model.form.PlaneInsertForm;
 import be.technifutur.java.timairport.service.PlaneService;
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,13 +36,22 @@ public class PlaneController {
         return planeService.getAll();
     }
 
-    @PatchMapping("/update-maintenance/{id}")
-    public void updateMaintenance(@PathVariable("id") Long idPlane, @RequestBody Map<Long, Boolean> map) {
-        map.forEach((key, value) -> planeService.updateMaintenance(key, value));
+    @PatchMapping("/update-maintenance")
+    public void updateCompany(@RequestParam Long id, @RequestParam Boolean inMaintenance) {
+        planeService.updateMaintenance(id, inMaintenance);
     }
 
-    @PatchMapping("/update-company/{id}")
-    public void updateCompany(@PathVariable("id") Long idPLane, @RequestBody Map<Long, Long> map) {
-        map.forEach((key, value) -> planeService.updateCompany(key, value));
+    @PatchMapping("/update-company")
+    public void updateCompany(@RequestParam Long id, @RequestParam Long companyId) {
+        planeService.updateCompany(id, companyId);
+    }
+
+    @PatchMapping(path = "/{id:[0-9]+}/update/both")
+    public void update(@PathVariable long id, @RequestParam Map<String, String> params){
+        Map<String, Object> mapValues = new HashMap<>();
+        if (params.containsKey("companyId") )
+            mapValues.put("companyId", Long.parseLong(params.get("companyId")));
+        if (params.containsKey("maintenance") )
+            mapValues.put("maintenance", Boolean.parseBoolean(params.get("maintenance")));
     }
 }
