@@ -56,4 +56,27 @@ public class PlaneServiceImpl implements PlaneService {
     public List<PlaneDTO> getAll() {
         return planeRepository.findAll().stream().map(PlaneDTO::from).toList();
     }
+
+    @Override
+    public void updateMaintenance(Long id, Boolean updateMaintenance) {
+        Plane plane = planeRepository
+                .findById(id)
+                .orElseThrow(RessourceNotFoundException::new);
+        plane.setInMaintenance(updateMaintenance);
+
+        planeRepository.save(plane);
+    }
+
+    @Override
+    public void updateCompany(Long id, Long companyId) {
+        Company company = companyRepository
+                .findById(companyId)
+                .orElseThrow(RessourceNotFoundException::new);
+        Plane plane = planeRepository
+                .findById(id)
+                .orElseThrow(RessourceNotFoundException::new);
+
+        plane.setCompany(company);
+        planeRepository.save(plane);
+    }
 }

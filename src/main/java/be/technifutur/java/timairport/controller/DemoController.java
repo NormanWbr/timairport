@@ -4,7 +4,9 @@ import be.technifutur.java.timairport.model.form.DemoForm;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
-import org.springframework.util.MultiValueMap;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -45,15 +47,15 @@ public class DemoController {
         System.out.println(param); //variable du paramètre param
     }
 
-    @PostMapping("/body")
+    @PostMapping(value = "/body", consumes = "application/json")
     public void displayBody(@RequestBody @Valid DemoForm body) {
         System.out.println(body);
     }
 
     @GetMapping("/other")
-    public void displayRequest(HttpServletRequest request){
+    public void displayRequest(HttpServletRequest request) {
         System.out.println(request.getRequestURI());
-        System.out.println(request.getRequestURL());;
+        System.out.println(request.getRequestURL());
         request.getMethod();
     }
 
@@ -69,11 +71,38 @@ public class DemoController {
         );
     }
 
-    @GetMapping("/header/all")
-    public void displayAllheaders(@RequestHeader HttpHeaders headers){
+    @GetMapping(value = "/header/all")
+    public void displayAllheaders(@RequestHeader HttpHeaders headers) {
         headers.forEach(
                 (key, value) -> System.out.printf("%s : %s\n", key, value)
         );
     }
 
+    // --*- RestAPI -*--
+    // - client/server
+    // - stateless
+    // - code on demand
+    // - bonne utilisation des methods
+
+    // Body - return type
+    // Status
+    // Headers
+    @GetMapping(value = "/response/basic", produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+//    @ResponseBody -> pas nécessaire car RestController
+    public String createBasicResponse() {
+        return "ma réponse";
+    }
+
+    @GetMapping("/response/detailed")
+    public ResponseEntity<String> createDetailedResponse() {
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//
+//        return new ResponseEntity<>("ma réponse", headers, HttpStatus.OK);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body("ma réponse");
+    }
 }
