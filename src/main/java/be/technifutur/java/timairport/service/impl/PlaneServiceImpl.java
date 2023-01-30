@@ -1,7 +1,6 @@
 package be.technifutur.java.timairport.service.impl;
 
 import be.technifutur.java.timairport.exception.RessourceNotFoundException;
-import be.technifutur.java.timairport.mapper.PlaneMapper;
 import be.technifutur.java.timairport.model.dto.PlaneDTO;
 import be.technifutur.java.timairport.model.entity.Company;
 import be.technifutur.java.timairport.model.entity.Plane;
@@ -13,7 +12,6 @@ import be.technifutur.java.timairport.repository.TypePlaneRepository;
 import be.technifutur.java.timairport.service.PlaneService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
