@@ -6,6 +6,7 @@ import be.technifutur.java.timairport.repository.FlightRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public interface FlightService {
@@ -17,4 +18,8 @@ public interface FlightService {
     List<FlightDTO> getAll();
 
     boolean verifForm(FlightInsertForm form);
+
+    void delete(long id);
+
+    void update(Long id, Map<String, Object> updateData);
 }

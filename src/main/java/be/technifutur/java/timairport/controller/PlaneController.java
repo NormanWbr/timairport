@@ -4,8 +4,6 @@ import be.technifutur.java.timairport.model.dto.PlaneDTO;
 import be.technifutur.java.timairport.model.form.PlaneInsertForm;
 import be.technifutur.java.timairport.service.PlaneService;
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -55,6 +53,8 @@ public class PlaneController {
             mapValues.put("companyId", Long.parseLong(params.get("companyId")));
         if (params.containsKey("maintenance"))
             mapValues.put("maintenance", Boolean.parseBoolean(params.get("maintenance")));
+
+        planeService.update(id, mapValues);
     }
 
     @DeleteMapping("/delete/{id:[0-9]+}")

@@ -17,6 +17,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.List;
+import java.util.Objects;
 
 @Configuration
 @EnableWebSecurity
@@ -36,37 +37,66 @@ public class SecurityConfig {
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        /**
-         * RequestMatchers:
-         *      - * : n'importe quelle valeur dans un segment
-         *      - ** : n'importe quelle valeur dans 0 -> N segment(s)
-         *
-         * Authorization:
-         *      - permitAll()
-         *      - denyAll()
-         *      - authenticated()
-         *      - anonymous()
-         *      - hasRole(?)
-         *      - hasAnyRole(...?)
-         *      - hasAuthority(?)
-         *      - hasAnyAuthority(...?)
-         *
-         *      Une authority c'est un droit sous forme de String
-         *      Un Role est une Authority qui commence par 'ROLE_'
-         */
+        List<HttpMethod> amdinMethods = List.of(HttpMethod.POST, HttpMethod.PATCH, HttpMethod.PUT, HttpMethod.DELETE);
 
         http.authorizeHttpRequests( (authorize) -> {
-            authorize
-                    .requestMatchers("/plane/all").anonymous()
-                    .requestMatchers("/plane/add").authenticated()
-                    .requestMatchers("/plane/*/update").hasRole("ADMIN") // .hasAuthority("ROLE_ADMIN")
-                    .anyRequest().permitAll();
+                    authorize
+                            .requestMatchers(HttpMethod.GET, "/flight").authenticated()
+                            .requestMatchers(request -> amdinMethods.contains(request.getMethod())).hasRole("ADMIN")
+                            .anyRequest().permitAll();
         });
+
+        /*/
+            /**
+             * Les premiers matchers ont la priorité
+             * '.anyrequest', s'il est mis, doit être le dernier matcher
+             *
+             * RequestMatchers:
+             *      Lambda RequestMatchers:
+             *      - prend une HttpServletRequest en paramètre, renvoie un boolean
+             *
+             *      Method:
+             *      - une valeur de l'enum HttpMethod
+             *
+             *      Pattern:
+             *      - * : n'importe quelle valeur dans un segment
+             *      - ** : n'importe quelle valeur dans 0 -> N segment(s) (seulement en dernière position)
+             *      - {i:regex} : n'importe quelle valeur correspondant au paterne regex pour un segment
+             *      - ? : remplace une lettre
+             *
+             * Authorization:
+             *      - permitAll()
+             *      - denyAll()
+             *      - authenticated()
+             *      - anonymous()
+             *      - hasRole(?)
+             *      - hasAnyRole(...?)
+             *      - hasAuthority(?)
+             *      - hasAnyAuthority(...?)
+             *
+             *      Une authority c'est un droit sous forme de String
+             *      Un Role est une Authority qui commence par 'ROLE_'
+             *
+            http.authorizeHttpRequests( (authorize) -> {
+                authorize
+                        // via URI
+                        .requestMatchers("/plane/all").anonymous()
+                        .requestMatchers("/plane/add").authenticated()
+                        .requestMatchers("/plane/{id:[0-9]+}/update").hasRole("ADMIN") // .hasAuthority("ROLE_ADMIN")
+                        // via HttpMethod
+                        .requestMatchers(HttpMethod.POST).hasRole("USER")
+                        // via HttpMethod + Mapping
+                        .requestMatchers(HttpMethod.GET, "/plane/*").hasAnyRole("USER", "ADMIN") //.hasAnyAuthority("ROLE_USE", "ROLE_ADMIN")
+                        // via RequestMatchers
+                        .requestMatchers(request -> request.getRequestURI().length() > 50).hasRole("ADMIN")
+                        .anyRequest().permitAll();
+            });
+        //*/
 
         return http.build();
     }
 
-    @Bean
+    @Bean //C'est faux Norman
     public UserDetailsService userDetailsService(PasswordEncoder encoder){
         List<UserDetails> userDetails = List.of(
                 User.builder()

@@ -103,6 +103,7 @@ public class PlaneServiceImpl implements PlaneService {
             plane.setInMaintenance((Boolean) updateData.get("inMaintenanc sdvg;lmxdnvgksd,vklsd,vgk,kd,vklsd,cv,sdlp,e"));
         }
 
+        planeRepository.save(plane);
     }
 
     @Override
