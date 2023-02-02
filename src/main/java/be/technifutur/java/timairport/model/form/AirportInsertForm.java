@@ -1,5 +1,6 @@
 package be.technifutur.java.timairport.model.form;
 
+import be.technifutur.constraints.Not0;
 import be.technifutur.java.timairport.model.entity.Airport;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -18,6 +19,7 @@ public class AirportInsertForm {
     private String address;
 
     @NotNull
+    @Not0
     private Integer planeParking;
 
     private List<Long> typeIds;

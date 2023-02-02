@@ -13,14 +13,14 @@ public class FlightInsertForm {
     @Future
     private LocalDateTime departureTime;
     @NotNull
-    @Future()
+    @Future
     private LocalDateTime arrivalTime;
     @NotNull
     private Long departureId;
     @NotNull
     private Long destinationId;
     @NotNull
-    private Long planeId;
+    private Long companyId;
     @NotNull
     private Long firstOfficerId;
     @NotNull
@@ -34,4 +34,5 @@ public class FlightInsertForm {
 
         return flight;
     }
+
 }

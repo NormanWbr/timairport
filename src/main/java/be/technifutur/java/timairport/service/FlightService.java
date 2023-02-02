@@ -16,4 +16,5 @@ public interface FlightService {
 
     List<FlightDTO> getAll();
 
+    boolean verifForm(FlightInsertForm form);
 }

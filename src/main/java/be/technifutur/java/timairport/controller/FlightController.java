@@ -24,7 +24,8 @@ public class FlightController {
 
     @PostMapping("/add")
     public void create(@RequestBody @Valid FlightInsertForm form){
-        flightService.create(form);
+        if(flightService.verifForm(form))
+            flightService.create(form);
     }
 
     @GetMapping("/{id:[0-9]+}")
@@ -36,4 +37,6 @@ public class FlightController {
     public List<FlightDTO> getAll()    {
         return flightService.getAll();
     }
+
+
 }

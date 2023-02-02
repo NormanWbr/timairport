@@ -1,5 +1,6 @@
 package be.technifutur.java.timairport.model.form;
 
+import be.technifutur.constraints.MoreThanXdays;
 import be.technifutur.java.timairport.model.entity.Plane;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -16,6 +17,7 @@ public class PlaneInsertForm {
 
     @NotNull
     @PastOrPresent
+    @MoreThanXdays(amount = 8)
     private LocalDate registrationDate;
 
     @NotNull

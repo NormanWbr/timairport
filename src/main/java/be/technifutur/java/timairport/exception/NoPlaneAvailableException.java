@@ -1,6 +1,6 @@
 package be.technifutur.java.timairport.exception;
 
-public class NoPlaneAvailableException extends RuntimeException{
+public class NoPlaneAvailableException extends RessourceNotFoundException{
     public NoPlaneAvailableException(){
         super("Plis avyon disponib");
     }

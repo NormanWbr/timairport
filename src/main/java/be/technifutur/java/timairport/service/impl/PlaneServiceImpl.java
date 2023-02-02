@@ -105,6 +105,11 @@ public class PlaneServiceImpl implements PlaneService {
 
     }
 
+    @Override
+    public void delete(long id) {
+        planeRepository.deleteById(id);
+    }
+
     public void updateCompany(Long id, Company company) {
         Plane plane = planeRepository
                 .findById(id)

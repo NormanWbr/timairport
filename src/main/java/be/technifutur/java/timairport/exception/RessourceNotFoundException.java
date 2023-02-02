@@ -6,9 +6,13 @@ public class RessourceNotFoundException extends RuntimeException{
     public RessourceNotFoundException(){
         super("Yo pa jwenn demann lan 🚒");
     }
-
-    //La requete n'a pas été trouvée
+    public RessourceNotFoundException(String s){
+        super(s);
+    }
     public RessourceNotFoundException(Throwable cause){
         super("Yo pa jwenn demann lan 🚒", cause);
+    }
+    public RessourceNotFoundException(String s, Throwable cause){
+        super(s, cause);
     }
 }
