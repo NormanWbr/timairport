@@ -43,7 +43,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests( (authorize) -> {
                     authorize
-                            .requestMatchers(HttpMethod.POST, "/auth/register").anonymous()
+                            .requestMatchers(HttpMethod.POST, "/auth/*").anonymous()
                             .requestMatchers(request -> request.getRequestURI().length() > 50).hasRole("ADFMIN")
                             .requestMatchers("/plane/all").anonymous()
                             .requestMatchers("/plane/add").authenticated()
