@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "name": "custom",
+      "type": "be.technifutur.java.timairport.utils.CustomProp",
+      "sourceType": "be.technifutur.java.timairport.utils.CustomProp"
+    }
+  ],
+  "properties": [
+    {
+      "name": "custom.prop",
+      "type": "java.lang.String",
+      "sourceType": "be.technifutur.java.timairport.utils.CustomProp"
+    }
+  ],
+  "hints": []
+}
