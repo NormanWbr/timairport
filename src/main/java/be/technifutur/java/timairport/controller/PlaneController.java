@@ -1,10 +1,13 @@
 package be.technifutur.java.timairport.controller;
 
+import be.technifutur.java.timairport.exception.RessourceNotFoundException;
 import be.technifutur.java.timairport.model.dto.PlaneDTO;
 import be.technifutur.java.timairport.model.form.PlaneInsertForm;
 import be.technifutur.java.timairport.service.PlaneService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +31,11 @@ public class PlaneController {
 
     @GetMapping("/view/{id:[0-9]+}")
     public PlaneDTO getOne(@PathVariable long id) {
-        return planeService.getOne(id);
+        try {
+            return planeService.getOne(id);
+        }catch (RessourceNotFoundException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Wrong id", e);
+        }
     }
 
     @GetMapping("/view/all")

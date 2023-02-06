@@ -177,8 +177,18 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public void delete(long id) {
-        flightRepository.deleteById(id);
+    public void delete(Long id) {
+        if(confirm("delete", id))
+            flightRepository.deleteById(id);
+    }
+
+    public boolean confirm(String message, long id){
+        System.out.println(String.format("Are you sure you want to %s %s ?", message, flightRepository.getOne(id)));
+        return input() == "yes";
+    }
+
+    public String input(){
+        return "yes";
     }
 
 //    private boolean verifAvion(FlightInsertForm form){

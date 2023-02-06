@@ -19,7 +19,7 @@ public interface FlightService {
 
     boolean verifForm(FlightInsertForm form);
 
-    void delete(long id);
+    void delete(Long id);
 
     void update(Long id, Map<String, Object> updateData);
 }

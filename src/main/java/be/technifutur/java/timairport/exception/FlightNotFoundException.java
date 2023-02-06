@@ -1,16 +1,16 @@
 package be.technifutur.java.timairport.exception;
 
 public class FlightNotFoundException extends RessourceNotFoundException{
-
-    //La requete n'a pas été trouvée
     public FlightNotFoundException(){
-        super("Yo pa jwenn demann lan 🚒");
+        super("Vòl pa jwenn");
     }
-
-    //La requete n'a pas été trouvée
+    public FlightNotFoundException(String s){
+        super(s);
+    }
     public FlightNotFoundException(Throwable cause){
-        super("Yo pa jwenn demann lan 🚒", cause);
+        super("Vòl pa jwenn", cause);
     }
-
-    //generate flight not found exception
+    public FlightNotFoundException(String s, Throwable cause){
+        super(s, cause);
+    }
 }

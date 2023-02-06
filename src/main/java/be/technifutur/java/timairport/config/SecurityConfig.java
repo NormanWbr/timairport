@@ -3,6 +3,8 @@ package be.technifutur.java.timairport.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -41,8 +43,12 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests( (authorize) -> {
                     authorize
-                            .requestMatchers(HttpMethod.GET, "/flight").authenticated()
-                            .requestMatchers(request -> amdinMethods.contains(request.getMethod())).hasRole("ADMIN")
+                            .requestMatchers(HttpMethod.POST, "/auth/register").anonymous()
+                            .requestMatchers(request -> request.getRequestURI().length() > 50).hasRole("ADFMIN")
+                            .requestMatchers("/plane/all").anonymous()
+                            .requestMatchers("/plane/add").authenticated()
+                            .requestMatchers("/plane/{id:[0-9]+}/?pdate").hasRole("ADMIN")
+                            .requestMatchers(HttpMethod.POST).hasRole("ADMIN")
                             .anyRequest().permitAll();
         });
 
@@ -96,21 +102,26 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean //C'est faux Norman
-    public UserDetailsService userDetailsService(PasswordEncoder encoder){
-        List<UserDetails> userDetails = List.of(
-                User.builder()
-                        .username("user")
-                        .password(encoder().encode("pass"))
-                        .roles("USER")
-                        .build(),
-                User.builder()
-                        .username("admin")
-                        .password(encoder().encode("pass"))
-                        .roles("ADMIN", "USER")
-                        .build()
-        );
-        return new InMemoryUserDetailsManager(userDetails);
+//    @Bean //C'est faux Norman
+//    public UserDetailsService userDetailsService(PasswordEncoder encoder){
+//        List<UserDetails> userDetails = List.of(
+//                User.builder()
+//                        .username("user")
+//                        .password(encoder().encode("pass"))
+//                        .roles("USER")
+//                        .build(),
+//                User.builder()
+//                        .username("admin")
+//                        .password(encoder().encode("pass"))
+//                        .roles("ADMIN", "USER")
+//                        .build()
+//        );
+//        return new InMemoryUserDetailsManager(userDetails);
+//    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
     }
 
 }
